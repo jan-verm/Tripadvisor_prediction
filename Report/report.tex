@@ -1,0 +1,89 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{a4wide}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{xspace}
+\usepackage{xcolor}
+\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% indentation and paragraph formatting
+\usepackage{parskip}
+\usepackage{indentfirst}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{1.1em}
+
+% page style and header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Machine Learning Competition - Individual phase}
+\rhead{Group 15}
+\rfoot{--~Page \thepage~--}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\title{Machine Learning Competition \\
+\textbf{Group Phase} \\
+}
+\author{
+\textbf{Group 15} \\
+Bram De Deyn \\
+Jan Vermeulen \\
+Nathan Meheus \\
+Simone Arena}
+\maketitle
+\pagenumbering{arabic}
+
+The goal of this competition is the prediction of ratings for TripAdvisor reviews for hotels. This prediction can be made based on the other elements of the review, i.e. the author, the hotel (price and location), the written text and the date.
+
+\section{Scikit-learn}
+
+We made use of the scikit-learn library, version $0.18$. This made the implementation process much easier, as it provides efficiently implemented methods for all machine learning functionality.
+
+\section{Group interaction and work division}
+
+When the second phase of the competition started, we sat down and studied each other's projects. It became clear that we all focused on a different part and could all contribute to a better group project. Putting our areas of expertise together during our weekly meetings led to constantly improving cost values.
+
+\section{Problem/dataset analysis}
+
+The code file \texttt{data\_analysis.py} was used to give us some ideas of the basics of the dataset. Apart from manual inspection of the restaurant review files and debugging code using the data, it was quite impossible to manually do this. In this file we did some basic calculations, extracted information and made plots for this report.
+
+During this analysis we noticed something peculiar. Two authors were responsible for the majority of the reviews, i.e. the users \texttt{'A TripAdvisor member'} and \texttt{'lass='}. The second one is responsible for the only zero star ratings in the training data set.
+
+
+\section{Preprocessing and feature selection}
+
+At first, the written text of the review (i.e. the actual written text) had to be preprocessed. The content obviously contains the most important features. The preprocessing is done with an intuitive bags of words representation. With the \texttt{TfidfVectorizer} the raw text is converted to a matrix of TF-IDF features.
+
+% more information, rewrite?
+This matrix is then transformed by performing some dimensionality reduction. We keep a certain percentage of the most important features.
+
+During the data analysis we noticed that only one user gave zero star ratings and during the analysis of the results, we saw that our models only had 20\% precision at most for the zero rating predictions. After a quick discussion, we decided to train the model without the zero star ratings, thus decreasing the amount of classes from 6 to 5. We obtained a score improvement of about $0.03$.
+
+We also tried to add the other components of the reviews as features for our models, but nothing seemed to produce smaller cost values. The features I tried were the length of the written review text, the year of the review, the author, the hotel price, the hotel location etc. We concluded that the written text of the reviews was the only usable feature.
+
+% insert plots and more information
+
+\section{Machine learning techniques}
+
+\section{Analysis of intermediate results}
+
+\section{Hyperparameter tuning}
+
+ 
+\section{List of references}
+
+\begin{enumerate}
+	\item The documentation, user guides and tutorials on the  sci-kit learning website. -- \url{http://scikit-learn.org/stable/documentation.html}
+	\item \label{ref:movie-reviews} Predicting Star Ratings of Movie Review Comments, a report for a Stanford University assignment on Machine Learning -- \url{http://cs229.stanford.edu/proj2011/MehtaPhilipScaria-Predicting%20Star%20Ratings%20from%20Movie%20Review%20Comments.pdf}
+	\item StackOverflow on scikit-learn, for scikit-learn programming questions -- \url{http://stackoverflow.com/questions/tagged/scikit-learn}
+\end{enumerate}
+
+
+\end{document}
